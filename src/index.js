@@ -55,8 +55,8 @@ function shouldReply(message) {
 
 function cleanPrompt(content) {
   return content
-    .replace(new RegExp(`<@!?\\${client.user.id}>`, "g"), "")
-    .replace(/^!kuro\\s*/i, "")
+    .replace(new RegExp(`<@!?${client.user.id}>`, "g"), "")
+    .replace(/^!kuro\s*/i, "")
     .trim();
 }
 
@@ -84,7 +84,7 @@ client.on("messageCreate", async (message) => {
     return;
   }
 
-  if (/^!kuro\\s+(status|ai)$/i.test(message.content)) {
+  if (/^!kuro\s+(status|ai)$/i.test(message.content)) {
     await message.reply(`Status AI: ${ai.status()}\\nServer: aktif\\nUptime: ${Math.floor(process.uptime())} detik`);
     return;
   }
@@ -137,7 +137,7 @@ client.on("messageCreate", async (message) => {
     await memory.add(userKey, { role: "assistant", content: response.text });
 
     const suffix = response.provider !== "max-router"
-      ? `\\n\\n_[Jalur AI: ${response.provider}]_`
+      ? `\n\n_[Jalur AI: ${response.provider}]_`
       : "";
 
     await message.reply((response.text + suffix).slice(0, Number(process.env.MAX_REPLY_CHARS || 1800)));
